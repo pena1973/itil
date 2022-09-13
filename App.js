@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     elevation: 14,
   },
   buttonUp: {
-    backgroundColor: '',
+   // backgroundColor: '',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

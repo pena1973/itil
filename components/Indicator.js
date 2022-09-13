@@ -9,11 +9,6 @@ export default function Indicator({ task, myDaysApprove }) {
   // времени на проверку в милисекундах
   const myDaysApproveMS = myDaysApprove * dayMS;
 
-  //console.log('myDaysApprove', myDaysApprove);
-  //console.log('task', task);
-  //inCheking
-  //console.log('now', now);
-
   const SCREEN_WIDTH = Dimensions.get('window').width - 144;
   var width = SCREEN_WIDTH;
   var text = '';
@@ -28,24 +23,11 @@ export default function Indicator({ task, myDaysApprove }) {
     const hour = Number(task?.inCheking.substr(11, 2));
     const min = Number(task?.inCheking.substr(14, 2));
     const sec = Number(task?.inCheking.substr(17, 2));
-    // console.log('year', year);
-    // console.log('month', month);
-    // console.log('day', day);
-    // console.log('hour', hour);
-    // console.log('min', min);
-    // console.log('sec', sec);
 
     const dateInCheking = new Date(year, month, day, hour, min, sec, 0);
 
-    //console.log('dateInCheking', dateInCheking);
     // времени прошло на проверку  в милисекундах
     const timeRunOff = Math.abs(now.getTime() - dateInCheking.getTime());
-    // console.log('now', now);
-    // console.log('dateInCheking', dateInCheking);
-    // console.log('now.getTime()', now.getTime());
-    // console.log('dateInCheking.getTime()', dateInCheking.getTime());
-
-    // console.log('timeRunOff', timeRunOff);
 
     if (timeRunOff >= myDaysApproveMS) {
       (backgroundColor = '#F45B44'), (text = 'Задача принята автоматически');
@@ -53,9 +35,6 @@ export default function Indicator({ task, myDaysApprove }) {
     } else {
       // сколько процентов времени утекло
       const procentTime = (timeRunOff / myDaysApproveMS) * 100;
-      // console.log('timeRunOff', timeRunOff);
-      // console.log('myDaysApproveMS', myDaysApproveMS);
-      // console.log('procentTime', procentTime);
       if (procentTime <= 20) {
         backgroundColor = '#8CD478';
       } else if (procentTime <= 40) {
@@ -70,13 +49,10 @@ export default function Indicator({ task, myDaysApprove }) {
     }
   }
 
-  // console.log('backgroundColor', backgroundColor);
-  // console.log('width', width);
   return (
     <View
       style={{
-        backgroundColor: backgroundColor,
-        //height: 14,
+        backgroundColor: {backgroundColor},
         width: width,
       }}>
       <Text
