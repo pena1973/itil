@@ -21,7 +21,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 
 
 //import store from './redusers/store';
-import {store,persistor} from './redusers/store';
+import { store, persistor } from './redusers/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import aprooveReduser, { aprTask, rejTask, addTask } from './redusers/aprooveReduser';
@@ -36,13 +36,12 @@ if (Platform.OS === 'android') {
   }
 }
 
-function AddTask() {}
- 
+function AddTask() { }
 
 
 function App() {
 
-  
+
   const [onlyMy, setOnlyMyTasks] = useState(false);
   const [queueFilteretdTasks, setQueueFilteredTasks] = useState(queueTasks); // Применение фильтра к очереди
   const [aprooveFilteretdTasks, setAprooveFilteredTasks] = useState(aprooveTasks); // Применение фильтра к приемке
@@ -53,13 +52,14 @@ function App() {
 
   const aprooveTasksInitial = useSelector((state) => state.aprooveTasks);
   const queueTasksInitial = useSelector((state) => state.queueTasks);
-  
+
   const [aprooveTasks, approveDispatch] = useReducer(aprooveReduser, aprooveTasksInitial);
   const [queueTasks, queueDispatch] = useReducer(queueReduser, queueTasksInitial);
 
-function Aproove(task) {
-    approveDispatch(aprTask(task));
- }
+  function Aproove(task) {
+    //dispatch({ type: 'TASKS_FETCH_REQUESTED', payload: { task } }) // 'Это в сагу
+     approveDispatch(aprTask(task));
+  }
   // фильтер - функция которая вызывает функцию отбора  в очереди а на вход заходит элемент массива
   const queueFilterTasks = (onlyMy) => {
     if (onlyMy) {
@@ -75,33 +75,34 @@ function Aproove(task) {
   // фильтр - функция которая вызывает функцию отбора  в  списке приемки
   // на вход зайдет состояние фильтра
   const aprooveFilterTasks = (stateFilter) => {
-     const arrStatus = stateFilter?.arrStatus;
-     const arrPriority = stateFilter?.arrPriority;
-     const dateStart = stateFilter?.dateStart;
-     const dateFinish = stateFilter?.dateFinish;
+    const arrStatus = stateFilter?.arrStatus;
+    const arrPriority = stateFilter?.arrPriority;
+    const dateStart = stateFilter?.dateStart;
+    const dateFinish = stateFilter?.dateFinish;
 
     //  последовательно применяем фильтр к каждому элементу
-    if (stateFilter!=undefined) {
-      const fTasks = aprooveTasks.filter((task) =>{
-        const dateRegistered =(registred = task.registred) =>{
-            return(new Date(
-              registred.substr(7,4),
-              registred.substr(4,2) - 1,
-              registred.substr(0,2)+1,
-              0,
-              0,
-              0,
-              0
-            ))}
-            // Отсекли по датам
-            if (dateStart!= undefined && dateRegistered<dateStart) return false
-            if (dateFinish!= undefined && dateRegistered>dateFinish) return false
-            // Отсекли по приоритетам
-            // Отсекли по статусам
-            
-            return true 
+    if (stateFilter != undefined) {
+      const fTasks = aprooveTasks.filter((task) => {
+        const dateRegistered = (registred = task.registred) => {
+          return (new Date(
+            registred.substr(7, 4),
+            registred.substr(4, 2) - 1,
+            registred.substr(0, 2) + 1,
+            0,
+            0,
+            0,
+            0
+          ))
+        }
+        // Отсекли по датам
+        if (dateStart != undefined && dateRegistered < dateStart) return false
+        if (dateFinish != undefined && dateRegistered > dateFinish) return false
+        // Отсекли по приоритетам
+        // Отсекли по статусам
+
+        return true
       })
-       setAprooveFilteredTasks([...fTasks]);       
+      setAprooveFilteredTasks([...fTasks]);
     } else {
       setAprooveFilteredTasks(aprooveTasks);
     }
@@ -145,11 +146,11 @@ function Aproove(task) {
         </View>
         <TopTaskItem />
         <FlatList data={queueFilteretdTasks} renderItem={renderItem} />
-        
+
         <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
           <Text style={styles.buttonText}>Добавить задачу </Text>
         </TouchableOpacity>
-        
+
         <Text style={[styles.text, {}]}>Мои задачи на приемке</Text>
         <Filter />
         <TopTaskApruve />
@@ -162,9 +163,9 @@ function Aproove(task) {
 export default function App1() {
   return (
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <App />
-        </PersistGate>
+      </PersistGate>
     </Provider>
   );
 }
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     elevation: 14,
   },
   buttonUp: {
-   // backgroundColor: '',
+    // backgroundColor: '',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
