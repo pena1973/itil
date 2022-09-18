@@ -10,6 +10,9 @@
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-navigation/bottom-tabs": "^6.3.2",
+    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/stack": "^6.3.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@types/react": "*",
     "@types/react-dom": "18.0.0",
@@ -26,8 +29,11 @@
     "react-native-calendars": "*",
     "react-native-dropdown-picker": "*",
     "react-native-element-dropdown": "*",
+    "react-native-gesture-handler": "~2.1.0",
     "react-native-paper": "4.9.2",
+    "react-native-safe-area-context": "3.3.2",
     "react-native-web": "0.17.1",
+    "react-navigation-stack": "^2.10.4",
     "react-redux": "^8.0.2",
     "redux": "*",
     "redux-persist": "*"

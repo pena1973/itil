@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Indicator from './Indicator';
 
-export default function TaskApruve({task, myDaysApprove, aproove }) {
+export default function ApproveTaskItem({task, myDaysApprove, approve }) {
   var describtion = task?.content.slice(0, 115);
   if (describtion.length < task?.content.length) {
     describtion = describtion + '...';
@@ -53,7 +53,7 @@ export default function TaskApruve({task, myDaysApprove, aproove }) {
               margin: 2,
             },
           ]}
-          onPress={()=>aproove(task)}
+          onPress={()=>approve(task)}
           >
           <Text
             style={{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function TopTaskItem() {
+export default function TopApproveTaskItem() {
   return (
     <View style={{ borderColor: 'black', borderWidth: 1 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
@@ -15,11 +15,11 @@ export default function TopTaskItem() {
         <View style={{ flex: 1, borderRightWidth: 1, borderLeftWidth: 1 }}>
           <Text
             style={[styles.textTask, { height: 20,}]}>
-            Описание
+            Индикатор времени
           </Text>
         </View>
-        <View style={[styles.textTask, { width: 60 }]}>
-          <Text style={styles.textTask}>(р/ч)</Text>
+        <View style={[styles.textTask, { width: 44 }]}>
+          
         </View>
       </View>
     </View>

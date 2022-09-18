@@ -88,61 +88,61 @@ const initialValue = [
 ];
 
 
-const taskSlice = createSlice({
-  name: 'aproover',
-  initialState: initialValue,
-  reducers: {
-    addTask: (state, action) => {
-      return [...state, action.task];
-    },
-    aprTask: (state, action) => {
-      let ind = state.findIndex((el) => el.id_Tiket === action?.task?.id_Tiket);
-      console.log(ind);
-      let newState = [...state];
-      newState.splice(ind, 1);
-      return newState;
-    },
-    rejTask: (state, action) => {
-      return state.filter((n) => n.id_Tiket !== action.task.id_Tiket);
-    },
-  }
-})
-
-// Action creators are generated for each case reducer function
-export const { addTask, aprTask, rejTask } = taskSlice.actions
-
-export default taskSlice.reducer
-
-// Старый редюсор
-
-// const reduser = (state = initialValue, action) => {
-//   switch (action.type) {
-//     case TASK_ADD:
+// const taskSlice = createSlice({
+//   name: 'aproover',
+//   initialState: initialValue,
+//   reducers: {
+//     addTask: (state, action) => {
 //       return [...state, action.task];
-//     case TASK_APR:
+//     },
+//     aprTask: (state, action) => {
 //       let ind = state.findIndex((el) => el.id_Tiket === action?.task?.id_Tiket);
 //       console.log(ind);
 //       let newState = [...state];
 //       newState.splice(ind, 1);
 //       return newState;
-//     case TASK_REJ:
+//     },
+//     rejTask: (state, action) => {
 //       return state.filter((n) => n.id_Tiket !== action.task.id_Tiket);
-//     default:
-//       return state;
+//     },
 //   }
-// };
+// })
 
-// export const addTask = (task) => {
-//   return { type: TASK_ADD, task: task };
-// };
+// // Action creators are generated for each case reducer function
+// export const { addTask, aprTask, rejTask } = taskSlice.actions
 
-// export const aprTask = (task) => {
-//   console.log('123', task);
-//   return { type: TASK_APR, task: task };
-// };
+// export default taskSlice.reducer
 
-// export const rejTask = (task) => {
-//   return { type: TASK_REJ, task: task };
-// };
+// Старый редюсор
 
-// export default reduser;
+const reduser = (state = initialValue, action) => {
+  switch (action.type) {
+    case TASK_ADD:
+      return [...state, action.task];
+    case TASK_APR:
+      let ind = state.findIndex((el) => el.id_Tiket === action?.task?.id_Tiket);
+      console.log(ind);
+      let newState = [...state];
+      newState.splice(ind, 1);
+      return newState;
+    case TASK_REJ:
+      return state.filter((n) => n.id_Tiket !== action.task.id_Tiket);
+    default:
+      return state;
+  }
+};
+
+export const addTask = (task) => {
+  return { type: TASK_ADD, task: task };
+};
+
+export const aprTask = (task) => {
+  console.log('123', task);
+  return { type: TASK_APR, task: task };
+};
+
+export const rejTask = (task) => {
+  return { type: TASK_REJ, task: task };
+};
+
+export default reduser;

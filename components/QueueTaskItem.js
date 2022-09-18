@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,7 @@ import {
 } from 'react-native';
 
 
-
-export default function TaskItem({ task }) {
+export default function QueueTaskItem({ task }) {
   var describtion = task?.content.slice(0, 115);
   if (describtion.length < task?.content.length) {
     describtion = describtion + '...';
