@@ -1,6 +1,7 @@
 // типы дейсвий изменения состояния
-const TASK_ADD = 'queueReducer/TASK_ADD'; // добавление
-const TASK_REM = 'queueReducer/TASK_APR'; // убираем из очереди
+const LIST_ADD = 'myListReducer/LIST_ADD'; // добавление (сохранение) черновика
+const LIST_REG = 'myListReducer/LIST_REG'; // регистрация задачи
+const List_CNL = 'myListReducer/List_CNL'; // Отмена задачи
 
 const initialValue = [
   {
@@ -61,26 +62,34 @@ const reduser = (state = initialValue, action) => {
   console.log('state', state);
   console.log('action', action);
   switch (action.type) {
-    case TASK_ADD:
+    case LIST_ADD:
+      console.log("LIST_ADD", task);
       return [...state, action.task];
-    case TASK_REM:
-      console.log("165656423",task);
-      var state1 = (state.filter((n) => n.id_Tiket !== action.task.id_Tiket));
-      console.log("state1",state1);
+    case LIST_REG:
+      console.log("LIST_REG", task);
+      return state;
+    case List_CNL:
+      console.log("List_CNL", task);
       return state;
     default:
       return state;
   }
 };
 
-export const addTaskQ = (task) => {
-  return { type: TASK_ADD, task: task };
+export const addList = (task) => {
+  return { type: LIST_ADD, task: task };
 };
 
-export const remTaskQ = (task) => {
-  console.log("123",task);
-  return {type: TASK_APR, task: task };
+export const regList = (task) => {
+  //console.log("123",task);
+  return {type: LIST_REG, task: task };
 };
+
+export const cnlList = (task) => {
+  //console.log("123",task);
+  return {type: List_CNL, task: task };
+};
+
 
 
 export default reduser;

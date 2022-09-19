@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 
-export default function MyTasksItem({ task }) {
+export default function MyListItem({ task }) {
   var describtion = task?.content.slice(0, 115);
   if (describtion.length < task?.content.length) {
     describtion = describtion + '...';

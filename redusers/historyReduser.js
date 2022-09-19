@@ -1,6 +1,5 @@
 // типы дейсвий изменения состояния
-const QUE_ADD = 'queueReducer/QUE_ADD'; // добавление
-const QUE_REM = 'queueReducer/QUE_APR'; // убираем из очереди
+const HIST_ADD = 'historyReducer/HIST_ADD'; // добавление завершенной задачи
 
 const initialValue = [
   {
@@ -8,7 +7,7 @@ const initialValue = [
     id_client: 'Apps_000000002',
     content:
       'Добрый день. Как называется телеграм-канал, в котором люди отписываться по обстановке на границе с Россией',
-    status: 'completed',
+    status: 'closed',
     priority: 'low',
     created: '24.04.2022 17:34:50',
     registred: '27.04.2022 18:39:43',
@@ -61,25 +60,16 @@ const reduser = (state = initialValue, action) => {
   console.log('state', state);
   console.log('action', action);
   switch (action.type) {
-    case QUE_ADD:
+    case HIST_ADD:
+      console.log("HIST_ADD", task);
       return [...state, action.task];
-    case QUE_REM:
-      console.log("165656423",task);
-      let state1 = (state.filter((n) => n.id_Tiket !== action.task.id_Tiket));
-      console.log("state1",state1);
-      return state;
     default:
       return state;
   }
 };
 
-export const addQueue = (task) => {
-  return { type: QUE_ADD, task: task };
-};
-
-export const remQueue = (task) => {
-  //console.log("123",task);
-  return {type: QUE_REM, task: task };
+export const addHist = (task) => {
+  return { type: HIST_ADD, task: task };
 };
 
 

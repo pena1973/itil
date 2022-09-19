@@ -94,7 +94,7 @@ function ScreenApproveIn() {
       <Text style={[styles.text, {}]}>Мои задачи на приемке</Text>
       <Filter />
       
-        <FlatList data={approveTasks} renderItem={renderItemApprove} ListHeaderComponent={TopApproveTaskItem} />
+        <FlatList data={approveFilteretdTasks} renderItem={renderItemApprove} ListHeaderComponent={TopApproveTaskItem} />
       
       <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
         <Text style={styles.buttonText}>Добавить задачу </Text>

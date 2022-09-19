@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function TopMyTasksItem() {
+export default function TopListItem() {
   return (
     <View style={{ borderColor: 'black', borderWidth: 1 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>

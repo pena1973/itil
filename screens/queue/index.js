@@ -19,7 +19,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 import { store, persistor } from '../../redusers/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import queueReduser, { remTaskQ, addTaskQ } from '../../redusers/queueReduser'
+import queueReduser, { remQueue, addQueue } from '../../redusers/queueReduser'
 
 const myID_Clients = 'Apps_000000003';
 

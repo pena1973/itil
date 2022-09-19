@@ -14,6 +14,19 @@ export const persistor = persistStore(store)
 import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './index'
 import { legacy_createStore as createStore} from 'redux'
+
 //const store = createStore(rootReducer)
 // export default store
 // export const persistor = persistStore(store);
+
+
+
+
+
+
+
+
+
+
+
+

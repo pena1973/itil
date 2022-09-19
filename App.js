@@ -14,7 +14,7 @@ import Queue from './screens/queue';
 import Approve from './screens/approve';
 import History from './screens/history';
 import Agreement from './screens/agreement';
-import MyTasks from './screens/myTasks';
+import MyList from './screens/myList';
 import TaskProfile from './screens/taskProfile';
 
 // const myID_Clients = 'Apps_000000003';
@@ -41,40 +41,46 @@ function MyStack() {
 function MyTabs() {
   return (
 
-    <Tab.Navigator initialRouteName="Queue" 
-    //screenOptions={{ headerShown: false }} 
-    screenOptions={({ route }) => ({headerShown: false,
-      tabBarIcon: ({ focused, color, size}) => {
-        let iconName;
-        if (route.name === 'Queue') {
-          iconName = focused
-            ? 'md-copy-outline'
-            : 'md-copy-outline';
-        } else if (route.name === 'Approve') {
-          iconName = focused ? 'hourglass' : 'hourglass';
-        } else if (route.name === 'MyTasks') {
-          iconName = focused ? 'md-heart' : 'md-heart';
-        } else if (route.name === 'History') {
-          iconName = focused ? 'md-book-outline' : 'md-book-outline';
-        }else if (route.name === 'Agreement') {
-          iconName = focused ? 'md-document-text-outline' : 'md-document-text-outline';
-        }
+    <Tab.Navigator initialRouteName="Queue"
+      //screenOptions={{ headerShown: false }} 
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        //swipeEnabled: true,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Queue') {
+            iconName = focused
+              ? 'md-copy-outline'
+              : 'md-copy-outline';
+          } else if (route.name === 'Approve') {
+            iconName = focused ? 'hourglass' : 'hourglass';
+          } else if (route.name === 'MyList') {
+            iconName = focused ? 'md-heart' : 'md-heart';
+          } else if (route.name === 'History') {
+            iconName = focused ? 'md-book-outline' : 'md-book-outline';
+          } else if (route.name === 'Agreement') {
+            iconName = focused ? 'md-document-text-outline' : 'md-document-text-outline';
+          }
 
-        // You can return any component that you like here!
-        return <Ionicons name={iconName} size={size} color={color}/>;
-      },
-      tabBarActiveTintColor: 'green',
-      tabBarInactiveTintColor: 'gray',
-    })}
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'green',
+        tabBarInactiveTintColor: 'gray',
+      })}
 
-     >
-      <Tab.Screen name="Queue" component={Queue}/>
+    >
+      <Tab.Group
+        screenOptions={({ navigation }) => ({ swipeEnabled: true })}
+      ></Tab.Group>
+
+      <Tab.Screen name="Queue" component={Queue} />
       <Tab.Screen name="Approve" component={Approve} />
-      <Tab.Screen name="MyTasks" component={MyTasks} /> 
+      <Tab.Screen name="MyList" component={MyList} />
       <Tab.Screen name="History" component={History} />
-      <Tab.Screen name="Agreement" component={Agreement} /> 
-      
-     </Tab.Navigator >
+      <Tab.Screen name="Agreement" component={Agreement} />
+
+    </Tab.Navigator >
   )
 };
 

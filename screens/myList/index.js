@@ -10,16 +10,16 @@ import {
 
 } from 'react-native';
 
-import MyTasksItem from '../../components/MyTasksItem';
-import TopMyTasksItem from '../../components/TopMyTasksItem';
-
+import MyListItem from '../../components/MyListItem';
+import TopMyListItem from '../../components/TopMyListItem';
+import Filter from '../../components/Filter';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 
 //import store from './redusers/store';
 import { store, persistor } from '../../redusers/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import myTasksReduser, { remTaskQ, addTaskQ } from '../../redusers/myTasksReduser'
+import myListReduser, { remTaskQ, addTaskQ } from '../../redusers/myListReduser'
 
 const myID_Clients = 'Apps_000000003';
 
@@ -31,26 +31,23 @@ if (Platform.OS === 'android') {
 // Дописать
 function AddTask() { }
 
-function ScreenMyTasksIn() {
+function ScreenMyListIn() {
 
-    const [onlyMy, setOnlyMyTasks] = useState(false);
-    const [myTasksFilteretdTasks, setmyTasksFilteredTasks] = useState(myTasksTasks); // Применение фильтра к очереди
+    const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListTasks); // Применение фильтра к очереди
+    const myListInitial = useSelector((state) => state.myListTasks);
+    const [myListTasks, myListDispatch] = useReducer(myListReduser, myListInitial);
 
-   
-    const myTasksTasksInitial = useSelector((state) => state.myTasksTasks);
-    const [myTasksTasks, myTasksDispatch] = useReducer(myTasksReduser, myTasksTasksInitial);
-
-    const renderItemMyTasks = ({ item, index }) => {
-        return <MyTasksItem task={item} index={index} />;
+    const renderItemMyList = ({ item, index }) => {
+        return <MyListItem task={item} index={index} />;
     };
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.text, {}]}>Очередь</Text>
+            <Text style={[styles.text, {}]}> Мои активные задачи</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
-
-            <FlatList data={myTasksFilteretdTasks} renderItem={renderItemMyTasks} ListHeaderComponent={TopMyTasksItem} />
+            <Filter />
+            <FlatList data={myListFilteretdTasks} renderItem={renderItemMyList} ListHeaderComponent={TopMyListItem} />
             
             <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
@@ -61,11 +58,11 @@ function ScreenMyTasksIn() {
 }
 
 
-export default function ScreenMyTasks() {
+export default function ScreenMyList() {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <ScreenMyTasksIn />
+                <ScreenMyListIn />
             </PersistGate>
         </Provider>
     );
