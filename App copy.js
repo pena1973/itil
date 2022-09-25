@@ -44,7 +44,7 @@ function App() {
 
   const [onlyMy, setOnlyMyTasks] = useState(false);
   const [queueFilteretdTasks, setQueueFilteredTasks] = useState(queueTasks); // Применение фильтра к очереди
-  const [aprooveFilteretdTasks, setAprooveFilteredTasks] = useState(aprooveTasks); // Применение фильтра к приемке
+  //const [aprooveFilteretdTasks, setAprooveFilteredTasks] = useState(aprooveTasks); // Применение фильтра к приемке
 
   useEffect(() => {
     queueFilterTasks(onlyMy);
@@ -62,15 +62,17 @@ function App() {
   }
   // фильтер - функция которая вызывает функцию отбора  в очереди а на вход заходит элемент массива
   const queueFilterTasks = (onlyMy) => {
-    if (onlyMy) {
-      const fTasks = queueTasks.filter((task) =>
-        task.id_client.toLowerCase().includes(myID_Clients.toLowerCase())
-      );
-      setQueueFilteredTasks([...fTasks]);
-    } else {
-      setQueueFilteredTasks(queueTasks);
-    }
+    //if (onlyMy) {
+      // const fTasks = queueTasks.filter((task) =>
+      //   task.id_client.toLowerCase().includes(myID_Clients.toLowerCase())
+      // );
+      // setQueueFilteredTasks([...fTasks]);
+   // }
+    //else {
+      setQueueFilteredTasks(queueTasks); 
+   // }
   };
+
 
   // фильтр - функция которая вызывает функцию отбора  в  списке приемки
   // на вход зайдет состояние фильтра

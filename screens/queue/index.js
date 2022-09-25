@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useReducer } from 'react';
+import axios from 'axios';
 import {
     View,
     Text,
@@ -13,41 +14,234 @@ import {
 import QueueTaskItem from '../../components/QueueTaskItem';
 import TopQueueTaskItem from '../../components/TopQueueTaskItem';
 
-import { Provider, useSelector, useDispatch } from 'react-redux';
-
-//import store from './redusers/store';
-import { store, persistor } from '../../redusers/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import queueReduser, { remQueue, addQueue } from '../../redusers/queueReduser'
-
-const myID_Clients = 'Apps_000000003';
+import { useSelector } from 'react-redux';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
-// Дописать
-function AddTask() { }
+// Временно пока нет АПИ
+ const queueTasksInitial = [
+     {
+         title: 'Задача1',
+        id_client: 'Apps_000000003',
+        content:
+          'Добрый день. Как называется телеграм-канал, в котором люди отписываться по обстановке на границе с Россией',
+        status: 'completed',
+        priority: 'low',
+        created: '24.04.2022 17:34:50',
+        registred: '27.04.2022 18:39:43',
+        inProgres: '',
+        inCheking: '03.09.2022 18:39:43',
+        apruved: '',
+        canceled: '',
+        closed: '',
+        estime: 10,
+        managerNotes: '',
+        id_Tiket: 'Apps_000000005',
+        files: [
+          {
+            file: 'Двоичный файл',
+            name: 'аватар вася',
+            type: 'png',
+            size: 176467,
+          },
+        ],
+      },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000003',
+      content:
+        'Добрый день. Как называется телеграм-канал, в котором люди отписываться по обстановке на границе с Россией',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '27.04.2022 18:39:43',
+      inProgres: '',
+      inCheking: '03.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 10,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000005',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000002',
+      content:
+        'Думаю, в нашей группе назрело создание темы по обмену денег между странами. В случае необходимости получить рубли или евро прошу вас размещать свои нужды здесь, дабы не размазывать свои посты по бесконечной ленте, а иметь все в одной горячей теме.Я думаю правильно будет все детали обмена вести в ЛС, где вы сможете договориться с другим участником о сумме, способе и времени передачи денег.',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '17.08.2022 18:39:43',
+      inProgres: '',
+      inCheking: '01.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 20,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000005',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000005',
+      content:
+        'Думаю, в нашей группе назрело создание темы по обмену денег между странами. В случае необходимости получить рубли или евро прошу вас размещать свои нужды здесь, дабы не размазывать свои посты по бесконечной ленте, а иметь все в одной горячей теме.Я думаю правильно будет все детали обмена вести в ЛС, где вы сможете договориться с другим участником о сумме, способе и времени передачи денег.',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '17.08.2022 18:39:43',
+      inProgres: '',
+      inCheking: '01.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 20,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000009',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000006',
+      content:
+        'Думаю, в нашей группе назрело создание темы по обмену денег между странами. В случае необходимости получить рубли или евро прошу вас размещать свои нужды здесь, дабы не размазывать свои посты по бесконечной ленте, а иметь все в одной горячей теме.Я думаю правильно будет все детали обмена вести в ЛС, где вы сможете договориться с другим участником о сумме, способе и времени передачи денег.',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '17.08.2022 18:39:43',
+      inProgres: '',
+      inCheking: '01.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 20,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000008',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000003',
+      content:
+        'Думаю, в нашей группе назрело создание темы по обмену денег между странами. В случае необходимости получить рубли или евро прошу вас размещать свои нужды здесь, дабы не размазывать свои посты по бесконечной ленте, а иметь все в одной горячей теме.Я думаю правильно будет все детали обмена вести в ЛС, где вы сможете договориться с другим участником о сумме, способе и времени передачи денег.',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '17.08.2022 18:39:43',
+      inProgres: '',
+      inCheking: '01.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 20,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000007',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+    {
+      title: 'Задача1',
+      id_client: 'Apps_000000003',
+      content:
+        'Думаю, в нашей группе назрело создание темы по обмену денег между странами. В случае необходимости получить рубли или евро прошу вас размещать свои нужды здесь, дабы не размазывать свои посты по бесконечной ленте, а иметь все в одной горячей теме.Я думаю правильно будет все детали обмена вести в ЛС, где вы сможете договориться с другим участником о сумме, способе и времени передачи денег.',
+      status: 'completed',
+      priority: 'low',
+      created: '24.04.2022 17:34:50',
+      registred: '17.08.2022 18:39:43',
+      inProgres: '',
+      inCheking: '01.09.2022 18:39:43',
+      apruved: '',
+      canceled: '',
+      closed: '',
+      estime: 20,
+      managerNotes: '',
+      id_Tiket: 'Apps_000000006',
+      files: [
+        {
+          file: 'Двоичный файл',
+          name: 'аватар вася',
+          type: 'png',
+          size: 176467,
+        },
+      ],
+    },
+  ];
 
-function ScreenQueueIn() {
+export default function ScreenQueue() {
+    const agreement = useSelector((state) => state.agreementReducer);  // число дней проверки
+    let myID_Clients = agreement.myID_Clients;
+   
+    const [queueTasks, setQueueTasks] = useState(queueTasksInitial);
+    const loadQueueTasks = () => {
+    //   const url = 'https://api.thecatapi.com/v1/breeds';
+    //   axios
+    //     .get(url)
+    //     .then((response) => {
+    //       console.log(response);
+    //       if (response?.data) {
+    //         setQueueTasks(response?.data);
+    //       }
+    //     })
+    //     .catch((error) => console.log(error));
+    // временно пока нет апи
+             setQueueTasks(queueTasksInitial);
+     };
+    useEffect(() => {
+        loadQueueTasks();
+    }, []);
 
     const [onlyMy, setOnlyMyTasks] = useState(false);
     const [queueFilteretdTasks, setQueueFilteredTasks] = useState(queueTasks); // Применение фильтра к очереди
-
     useEffect(() => {
         queueFilterTasks(onlyMy);
     }, [onlyMy]);
 
-    const queueTasksInitial = useSelector((state) => state.queueTasks);
-    const [queueTasks, queueDispatch] = useReducer(queueReduser, queueTasksInitial);
-
     // фильтер - функция которая вызывает функцию отбора  в очереди а на вход заходит элемент массива
     const queueFilterTasks = (onlyMy) => {
+        console.log('queueTasks',queueTasks);
         if (onlyMy) {
-            const fTasks = queueTasks.filter((task) =>
-                task.id_client.toLowerCase().includes(myID_Clients.toLowerCase())
+            const fTasks = queueTasks.filter((task) =>              
+            task?.id_client?.toLowerCase().includes(myID_Clients.toLowerCase())
             );
             setQueueFilteredTasks([...fTasks]);
         } else {
@@ -81,7 +275,7 @@ function ScreenQueueIn() {
             </View>
 
             <FlatList data={queueFilteretdTasks} renderItem={renderItemQueue} ListHeaderComponent={TopQueueTaskItem} />
-            
+
             <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
@@ -90,16 +284,6 @@ function ScreenQueueIn() {
     );
 }
 
-
-export default function ScreenQueue() {
-    return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ScreenQueueIn />
-            </PersistGate>
-        </Provider>
-    );
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -155,7 +339,7 @@ const styles = StyleSheet.create({
         shadowRadius: 9.11,
         elevation: 14,
     },
-    buttonText: {        
+    buttonText: {
         fontSize: 20,
         lineHeight: 24,
         flexDirection: 'row',

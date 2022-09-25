@@ -13,15 +13,7 @@ import {
 import MyListItem from '../../components/MyListItem';
 import TopMyListItem from '../../components/TopMyListItem';
 import Filter from '../../components/Filter';
-import { Provider, useSelector, useDispatch } from 'react-redux';
-
-//import store from './redusers/store';
-import { store, persistor } from '../../redusers/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import myListReduser, { remTaskQ, addTaskQ } from '../../redusers/myListReduser'
-
-const myID_Clients = 'Apps_000000003';
+import {useSelector } from 'react-redux';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -31,11 +23,12 @@ if (Platform.OS === 'android') {
 // Дописать
 function AddTask() { }
 
-function ScreenMyListIn() {
-
-    const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListTasks); // Применение фильтра к очереди
-    const myListInitial = useSelector((state) => state.myListTasks);
-    const [myListTasks, myListDispatch] = useReducer(myListReduser, myListInitial);
+export default function ScreenMyList() {
+    const myList = useSelector((state) => state.myListReducer);
+    // Фильтр по статусам только активные 
+    const myListInitial = myList?.filter((task) => !(task?.status.includes('canceled') || task?.status.includes('completed') || task?.status.includes('closed')));
+    console.log('myListInitial', myListInitial.length);
+    const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение пользовательского фильтра к очереди
 
     const renderItemMyList = ({ item, index }) => {
         return <MyListItem task={item} index={index} />;
@@ -46,25 +39,14 @@ function ScreenMyListIn() {
             <Text style={[styles.text, {}]}> Мои активные задачи</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
-            <Filter />
+            <Filter showStatus={true} menuStatus = {['draft','processing','registered','not_accepted','checking']}/>
             <FlatList data={myListFilteretdTasks} renderItem={renderItemMyList} ListHeaderComponent={TopMyListItem} />
-            
+
             <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
 
         </View>
-    );
-}
-
-
-export default function ScreenMyList() {
-    return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ScreenMyListIn />
-            </PersistGate>
-        </Provider>
     );
 }
 
@@ -122,7 +104,7 @@ const styles = StyleSheet.create({
         shadowRadius: 9.11,
         elevation: 14,
     },
-    buttonText: {        
+    buttonText: {
         fontSize: 20,
         lineHeight: 24,
         flexDirection: 'row',

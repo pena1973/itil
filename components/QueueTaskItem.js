@@ -7,8 +7,8 @@ import {
 
 
 export default function QueueTaskItem({ task }) {
-  var describtion = task?.content.slice(0, 115);
-  if (describtion.length < task?.content.length) {
+  var describtion = task?.content?.slice(0, 115);
+  if (describtion?.length < task?.content?.length) {
     describtion = describtion + '...';
   }
 

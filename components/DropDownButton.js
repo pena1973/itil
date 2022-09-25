@@ -11,33 +11,28 @@ export default function DropdownButton({
   selection,
   label,
 }) {
-  const [open, setOpen] = useState(expanded);
+  //const [open, setOpen] = useState(expanded);
   const [value, setValue] = useState(selection);
   const [items, setItems] = useState(label);
 
   return (
     <DropDownPicker
-    dropDownMaxHeight={250}
+    //dropDownMaxHeight={200}
       style={[
-        styles.buttonUp,
+      //  styles.buttonUp,
         { backgroundColor: '#F2ECD7',
-          //width: 145,
           paddingLeft: 5,
           flexDirection: 'row',
-          //alignItems: 'flex-start',
-          //justifyContent: 'flex-start',
         },
       ]}
       placeholder={placeholder}
       dropDownDirection="Bottom"
       badgeStyle={{ flexDirection: 'row'}}
       dropDownContainerStyle={[
-        styles.buttonUp,       
-        {
-          //flex:1,
+        styles.buttonUp,
+        {          
           backgroundColor: '#F2ECD7',
-         // width: 145,
-          paddingStart: 5,
+          paddingStart: 5,       
         },
       ]}      
       open={expanded}

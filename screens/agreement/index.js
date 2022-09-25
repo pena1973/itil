@@ -9,14 +9,9 @@ import {
 
 } from 'react-native';
 
-import { Provider, useSelector, useDispatch } from 'react-redux';
-
-//import store from './redusers/store';
-import { store, persistor } from '../../redusers/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import agreementReduser, { upDate} from '../../redusers/agreementReduser';
-//import {selectAgreement} from '../../reducers/agreementReduser';
+import {useSelector, useDispatch } from 'react-redux';
+import { resetAgreement } from '../../redusers/agreementReduser';
+import { resetMyList } from '../../redusers/myListReduser';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -24,80 +19,79 @@ if (Platform.OS === 'android') {
     }
 }
 
-function ScreenAgreementIn() {
-   
-    const agreementInitial = useSelector((state) => state.agreement);
-    const [state, agreementDispatch] = useReducer(agreementReduser, agreementInitial);
-   // const agreement = useSelector(state => state.agreement);
+export default function ScreenAgreement() {
+    const agreement = useSelector((state) => state.agreementReducer);
+    const agreementDiapatch  =  useDispatch();
+    
+     const resetAll= ()=>{
+        console.log(1);
+         agreementDiapatch(resetAgreement());
+         agreementDiapatch(resetMyList());
+         
+     };
+
     return (
         <View style={styles.container}>
             <View style={{ flex: 1 }}>
-            <Text style={[styles.text, { marginTop:15}]}> Договор</Text>
+                <Text style={[styles.text, { marginTop: 15 }]}> Договор</Text>
 
-            <Text style={[styles.text, { marginTop:15, fontSize: 16, fontWeight: '500', lineHeight: 16 }]}> Договор подписан {state?.signed}</Text>
-            <Text style={[styles.text, { marginTop:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Абоненская плата {state?.regular_fee}</Text>
-            <Text style={[styles.text, { marginTop:15, marginBottom:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Рабочих дней на проверку задачи {state?.cheking_days} </Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 16, fontWeight: '500', lineHeight: 16 }]}> Договор подписан {agreement?.signed}</Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Абоненская плата {agreement?.regular_fee}</Text>
+                <Text style={[styles.text, { marginTop: 15, marginBottom: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Рабочих дней на проверку задачи {agreement?.cheking_days} </Text>
 
-            <View style={{ flexDirection: 'row', padding:7, borderWidth:1, borderBottomWidth:0, marginLeft:15, marginRight:15 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Приоритет </Text>
+                <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Приоритет </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Стоимость часа </Text>
+                    </View>
                 </View>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Стоимость часа </Text>
+
+                <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Высокий </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.high_priority} </Text>
+                    </View>
                 </View>
+
+                <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Средний </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.midle_priority} </Text>
+                    </View>
+                </View>
+
+                <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, marginLeft: 15, marginRight: 15 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Низкий </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.low_priority} </Text>
+                    </View>
+                </View>
+
+                <Text style={[styles.text, { marginTop: 15 }]}> Контакты</Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Техническая поддержка (телефон, мейл)</Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Менеджер {agreement?.manager}</Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Часы работы: </Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> рабочие дни с 9-00 до 18-00 </Text>
             </View>
-
-            <View style={{ flexDirection: 'row', padding:7 , borderWidth:1 ,borderBottomWidth:0 , marginLeft:15, marginRight:15  }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Высокий </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {state?.high_priority} </Text>
-                </View>
-            </View>
-
-            <View style={{ flexDirection: 'row', padding:7 , borderWidth:1 ,borderBottomWidth:0 , marginLeft:15, marginRight:15}}>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Средний </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {state?.midle_priority} </Text>
-                </View>
-            </View>
-
-            <View style={{ flexDirection: 'row', padding:7 , borderWidth:1 , marginLeft:15, marginRight:15}}>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Низкий </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {state?.low_priority} </Text>
-                </View>
-            </View>
-
-            <Text style={[styles.text, { marginTop:15 }]}> Контакты</Text>
-            <Text style={[styles.text, { marginTop:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Техническая поддержка (телефон, мейл)</Text>
-            <Text style={[styles.text, { marginTop:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Менеджер {state?.manager}</Text>
-            <Text style={[styles.text, { marginTop:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Часы работы: </Text>
-            <Text style={[styles.text, { marginTop:15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> рабочие дни с 9-00 до 18-00 </Text>
-            </View>
-            <TouchableOpacity style={styles.button} onPress={() => Support()}>
+            <TouchableOpacity style={styles.button} onPress={() => support()}>
                 <Text style={styles.buttonText}>Сообщение менеджеру </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={styles.button} onPress={() => resetAll()}>
+                <Text style={styles.buttonText}>Сбросить </Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
-
-export default function ScreenAgreement() {
-    return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ScreenAgreementIn />
-            </PersistGate>
-        </Provider>
-    );
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -153,7 +147,7 @@ const styles = StyleSheet.create({
         shadowRadius: 9.11,
         elevation: 14,
     },
-    buttonText: {        
+    buttonText: {
         fontSize: 20,
         lineHeight: 24,
         flexDirection: 'row',

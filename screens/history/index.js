@@ -13,29 +13,22 @@ import {
 import HistoryItem from '../../components/MyListItem';
 import TopHistoryItem from '../../components/TopMyListItem';
 import Filter from '../../components/Filter';
-import { Provider, useSelector, useDispatch } from 'react-redux';
-
-//import store from './redusers/store';
-import { store, persistor } from '../../redusers/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import historyReduser, { addHist, addTaskQ } from '../../redusers/historyReduser'
-
-const myID_Clients = 'Apps_000000003';
+import { useSelector } from 'react-redux';
 
 if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
-// Дописать
-function AddTask() { }
 
-function ScreenHistoryIn() {
+export default function ScreenHistory() {
 
-    const [historyFilteretdTasks, setHistoryFilteredTasks] = useState(historyTasks); // Применение фильтра к очереди
-    const historyInitial = useSelector((state) => state.historyTasks);
-    const [historyTasks, historyDispatch] = useReducer(historyReduser, historyInitial);
+    // читаем лист и фильтруем 
+    const myList = useSelector((state) => state.myListReducer);
+    // Фильтр по статусам только НЕ активные 
+    const myListInitial = myList?.filter((task) => (task?.status.includes('canceled') || task?.status.includes('completed') || task?.status.includes('closed')));
+
+    const [historyFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение фильтра к очереди 
 
     const renderItemHistory = ({ item, index }) => {
         return <HistoryItem task={item} index={index} />;
@@ -46,25 +39,14 @@ function ScreenHistoryIn() {
             <Text style={[styles.text, {}]}> Мои закрытые задачи</Text>
             <View style={{ flexDirection: 'row' }}>
             </View>
-            <Filter />
+            <Filter showStatus={true} menuStatus = {['canceled','closed','completed']}/>
             <FlatList data={historyFilteretdTasks} renderItem={renderItemHistory} ListHeaderComponent={TopHistoryItem} />
-            
+
             <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
 
         </View>
-    );
-}
-
-
-export default function ScreenHistory() {
-    return (
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <ScreenHistoryIn />
-            </PersistGate>
-        </Provider>
     );
 }
 
@@ -122,7 +104,7 @@ const styles = StyleSheet.create({
         shadowRadius: 9.11,
         elevation: 14,
     },
-    buttonText: {        
+    buttonText: {
         fontSize: 20,
         lineHeight: 24,
         flexDirection: 'row',

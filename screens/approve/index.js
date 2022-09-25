@@ -6,42 +6,34 @@ import {
   FlatList,
   TouchableOpacity,
   UIManager,
-  Platform,  
+  Platform,
 } from 'react-native';
-//import { Ionicons } from '@expo/vector-icons';
 import Filter from '../../components/Filter';
-//import ApproveTaskItem from './components/ApproveTaskItem';
+import ApproveTaskItem from '../../components/ApproveTaskItem';
 import TopApproveTaskItem from '../../components/TopApproveTaskItem';
-import { Provider, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { aprTask, refTask} from '../../redusers/myListReduser';
 
-//import store from '../../redusers/store';
-import { store, persistor } from '../../redusers/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import approveReduser, { aprTask, rejTask, addTask } from '../../redusers/aprooveReduser';
-
-const myID_Clients = 'Apps_000000003';
-const myDaysApprove = 10;
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
-// Добавить
-function AddTask() { }
 
-function ScreenApproveIn() {
+export default function ScreenApprove() {
+    
+  const myList = useSelector((state) => state.myListReducer);
+  const approveTasks = myList?.filter((task) => task?.status.includes('checking')); // отобрали только те что на проверке
+  const agreement = useSelector((state) => state.agreementReducer);  // число дней проверки
+  const myDaysApprove = agreement.cheking_days;
+  console.log('approveTasks', approveTasks);
 
+  const approveDispatch = useDispatch();
+ //const [approveTasks, approveDispatch] = useReducer(myListReduser, approveTasksInitial);
+ 
+ // временно исключу фильттр из отбора
   const [approveFilteretdTasks, setApproveFilteredTasks] = useState(approveTasks); // Применение фильтра к приемке
-
-  const approveTasksInitial = useSelector((state) => state.approveTasks);
-  const [approveTasks, approveDispatch] = useReducer(approveReduser, approveTasksInitial);
-
-  function Approve(task) {
-    //dispatch({ type: 'TASKS_FETCH_REQUESTED', payload: { task } }) // 'Это в сагу
-     approveDispatch(aprTask(task));
-  }
   // фильтр - функция которая вызывает функцию отбора  в  списке приемки
   // на вход зайдет состояние фильтра
   const approveFilterTasks = (stateFilter) => {
@@ -80,11 +72,13 @@ function ScreenApproveIn() {
 
   const renderItemApprove = ({ item, index }) => {
     return (
-      <TaskApruve
+      <ApproveTaskItem
         task={item}
         index={index}
         myDaysApprove={myDaysApprove}
-        approve={(task) => Approve(task)}
+        approve={(task) => approveDispatch(aprTask(task))}
+        open={(task) => open(task)}
+        refuse={(task) => approveDispatch(refTask(task))}        
       />
     );
   };
@@ -92,24 +86,14 @@ function ScreenApproveIn() {
   return (
     <View style={styles.container}>
       <Text style={[styles.text, {}]}>Мои задачи на приемке</Text>
-      <Filter />
-      
-        <FlatList data={approveFilteretdTasks} renderItem={renderItemApprove} ListHeaderComponent={TopApproveTaskItem} />
-      
-      <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
-        <Text style={styles.buttonText}>Добавить задачу </Text>
-      </TouchableOpacity>  
-    </View>
-  );
-}
+      <Filter showStatus={false}/>
 
-export default function ScreenApprove() {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ScreenApproveIn />
-      </PersistGate>
-    </Provider>
+      <FlatList data={approveTasks} renderItem={renderItemApprove} ListHeaderComponent={TopApproveTaskItem}/>
+
+      <TouchableOpacity style={styles.button} onPress={() => add()}>
+        <Text style={styles.buttonText}>Добавить задачу </Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -174,7 +158,7 @@ const styles = StyleSheet.create({
     color: '#FFDE33',
   },
   button: {
-    
+
     alignItems: 'center',
     backgroundColor: '#746250',
     borderRadius: 10,

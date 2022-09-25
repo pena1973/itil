@@ -8,7 +8,19 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Ionicons } from '@expo/vector-icons';
+
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redusers/store';
+
+ //import store from './redusers/store';
+
+// import agreementReduser, { upDate} from '../../redusers/agreementReduser';
+// import {selectAgreement} from '../../redusers/selectors';
+
+
 
 import Queue from './screens/queue';
 import Approve from './screens/approve';
@@ -36,17 +48,18 @@ function MyStack() {
      </Stack.Navigator >
   )
 };
- const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
+ const Tab = createMaterialTopTabNavigator();
 
 function MyTabs() {
   return (
 
     <Tab.Navigator initialRouteName="Queue"
-      //screenOptions={{ headerShown: false }} 
+     tabBarPosition ='bottom'
       screenOptions={({ route }) => ({
         headerShown: false,
-        //swipeEnabled: true,
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarShowLabel: false,
+         tabBarIcon: ({ focused, color, size = 20 }) => {
           let iconName;
           if (route.name === 'Queue') {
             iconName = focused
@@ -64,15 +77,16 @@ function MyTabs() {
 
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
+          
         },
         tabBarActiveTintColor: 'green',
         tabBarInactiveTintColor: 'gray',
       })}
-
-    >
-      <Tab.Group
+      
+      >
+      {/* <Tab.Group
         screenOptions={({ navigation }) => ({ swipeEnabled: true })}
-      ></Tab.Group>
+      ></Tab.Group> */}
 
       <Tab.Screen name="Queue" component={Queue} />
       <Tab.Screen name="Approve" component={Approve} />
@@ -84,12 +98,24 @@ function MyTabs() {
   )
 };
 
-export default function App() {
+function AppIn() {
   return (
 
     <NavigationContainer>     
       <MyTabs/>
     </NavigationContainer>
 
+  );
+}
+
+export default function App() {
+  // console.log('store',store);
+  // console.log('queueReducer',store.getState().queueReducer); 
+  return (
+      <Provider store={store}>        
+          <PersistGate loading={null} persistor={persistor}>
+              <AppIn />
+          </PersistGate>
+      </Provider>
   );
 }
