@@ -7,7 +7,6 @@ import {
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -43,8 +42,8 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} >
-      <Stack.Screen name="QueueN" component={Queue}/>
-      //<Stack.Screen name="TaskN" component={TaskProfile}/> 
+      <Stack.Screen name="MyListN" component={MyList}/>
+      <Stack.Screen name="TaskProfile" component={TaskProfile}/> 
      </Stack.Navigator >
   )
 };
@@ -84,13 +83,10 @@ function MyTabs() {
       })}
       
       >
-      {/* <Tab.Group
-        screenOptions={({ navigation }) => ({ swipeEnabled: true })}
-      ></Tab.Group> */}
-
+     
       <Tab.Screen name="Queue" component={Queue} />
       <Tab.Screen name="Approve" component={Approve} />
-      <Tab.Screen name="MyList" component={MyList} />
+      <Tab.Screen name="MyList" component={MyStack} />
       <Tab.Screen name="History" component={History} />
       <Tab.Screen name="Agreement" component={Agreement} />
 

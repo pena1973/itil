@@ -3,10 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
 
-export default function MyListItem({ task }) {
+export default function MyListItem({ task, navigation}) {
   var describtion = task?.content?.slice(0, 115);
   if (describtion.length < task?.content?.length) {
     describtion = describtion + '...';
@@ -15,7 +16,8 @@ export default function MyListItem({ task }) {
   return (
     <View style={{ borderColor: 'black', borderWidth: 1 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-        <View style={{ width: 70, justifyContent: 'center' }}>
+        <TouchableOpacity style={{ width: 70, justifyContent: 'center' }}
+         onPress={()=> navigation.navigate('TaskProfile',{task})}>
           <Text
             style={
               (styles.textTask,
@@ -24,9 +26,9 @@ export default function MyListItem({ task }) {
             {' '}
             {task?.id_Tiket}{' '}
           </Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={{ flex: 1, borderRightWidth: 1, borderLeftWidth: 1 }}>
+        <TouchableOpacity style={{ flex: 1, borderRightWidth: 1, borderLeftWidth: 1 }} onPress={()=> navigation.navigate('TaskProfile',{task})}>
           <Text
             style={[styles.textTask, { height: 70, alignSelf: 'center' }]}
             ellipsizeMode="tail">
@@ -58,7 +60,7 @@ export default function MyListItem({ task }) {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <View style={{ width: 60, justifyContent: 'center' }}>
           <Text style={styles.textTask}>{task?.estime}</Text>
         </View>

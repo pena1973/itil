@@ -20,7 +20,9 @@ export default function DropdownButton({
     //dropDownMaxHeight={200}
       style={[
       //  styles.buttonUp,
-        { backgroundColor: '#F2ECD7',
+        { minHeight: 40,
+          maxHeight: 40,
+          backgroundColor: '#F2ECD7',
           paddingLeft: 5,
           flexDirection: 'row',
         },

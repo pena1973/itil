@@ -23,15 +23,16 @@ if (Platform.OS === 'android') {
 // Дописать
 function AddTask() { }
 
-export default function ScreenMyList() {
+export default function ScreenMyList({navigation}) {
     const myList = useSelector((state) => state.myListReducer);
     // Фильтр по статусам только активные 
     const myListInitial = myList?.filter((task) => !(task?.status.includes('canceled') || task?.status.includes('completed') || task?.status.includes('closed')));
-    console.log('myListInitial', myListInitial.length);
+    console.log('navigation', navigation);
     const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение пользовательского фильтра к очереди
 
     const renderItemMyList = ({ item, index }) => {
-        return <MyListItem task={item} index={index} />;
+        return <MyListItem task={item} index={index} navigation = {navigation}/>;
+        
     };
 
     return (
