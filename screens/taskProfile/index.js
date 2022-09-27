@@ -12,7 +12,7 @@
     import FileItem from '../../components/FileItem';
     
     export default function ScreenTaskProfile({ route, navigation }) {
-      //console.log(route?.params);
+     // console.log('props',props?.navigation?.getParent());
       let task = route?.params?.task;
       //let files = task?.files;
     
@@ -206,7 +206,7 @@
           <TouchableOpacity style={[styles.button, {marginTop:2,marginBottom:2}]} onPress={() => approve(task)}>
             <Text style={styles.buttonText}>Принять</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, {marginTop:2,marginBottom:2}]} onPress={() => add(task)}>
+          <TouchableOpacity style={[styles.button, {marginTop:2,marginBottom:2}]} onPress={() => navigation.goBack()}>
             <Text style={styles.buttonText}>Назад</Text>
           </TouchableOpacity>
         </View>

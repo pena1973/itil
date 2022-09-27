@@ -42,14 +42,14 @@ if (Platform.OS === 'android') {
 
 const Stack = createStackNavigator();
 
-function MyStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
-      <Stack.Screen name="MyListN" component={MyList}/>
-      <Stack.Screen name="TaskProfile" component={TaskProfile}/> 
-     </Stack.Navigator >
-  )
-};
+// function MyStack() {
+//   return (
+//     <Stack.Navigator screenOptions={{ headerShown: false }} >
+//       <Stack.Screen name="MyListN" component={MyList}/>
+//       <Stack.Screen name="TaskProfile" component={TaskProfile}/> 
+//      </Stack.Navigator >
+//   )
+// };
 
 function MainStack() {
   return (
@@ -102,7 +102,7 @@ function MyTabs() {
      
       <Tab.Screen name="Queue" component={Queue} />
       <Tab.Screen name="Approve" component={Approve} />
-      <Tab.Screen name="MyList" component={MyStack} />
+      <Tab.Screen name="MyList" component={MyList} />
       <Tab.Screen name="History" component={History} />
       <Tab.Screen name="Agreement" component={Agreement} />
 

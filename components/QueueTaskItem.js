@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 
-export default function QueueTaskItem({ task }) {
+export default function QueueTaskItem({ task}) {
   var describtion = task?.content?.slice(0, 115);
   if (describtion?.length < task?.content?.length) {
     describtion = describtion + '...';
