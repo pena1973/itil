@@ -20,8 +20,6 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
-// Дописать
-function AddTask() { }
 
 export default function ScreenMyList({navigation}) {
     const myList = useSelector((state) => state.myListReducer);
@@ -31,7 +29,7 @@ export default function ScreenMyList({navigation}) {
     const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение пользовательского фильтра к очереди
 
     const renderItemMyList = ({ item, index }) => {
-        return <MyListItem task={item} index={index} navigation = {navigation}/>;
+        return <MyListItem task={item} index={index} navigation = {navigation} keyExtractor = {(index)=>index.toString()}/>;
         
     };
 
@@ -43,7 +41,7 @@ export default function ScreenMyList({navigation}) {
             <Filter showStatus={true} menuStatus = {['draft','processing','registered','not_accepted','checking']}/>
             <FlatList data={myListFilteretdTasks} renderItem={renderItemMyList} ListHeaderComponent={TopMyListItem} />
 
-            <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TaskProfile')}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
 

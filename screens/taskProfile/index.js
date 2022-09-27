@@ -11,7 +11,7 @@
     
     import FileItem from '../../components/FileItem';
     
-    export default function ScreenTaskProfile({ route }) {
+    export default function ScreenTaskProfile({ route, navigation }) {
       //console.log(route?.params);
       let task = route?.params?.task;
       //let files = task?.files;

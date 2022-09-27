@@ -207,7 +207,7 @@ if (Platform.OS === 'android') {
     },
   ];
 
-export default function ScreenQueue() {
+export default function ScreenQueue({navigation}) {
     const agreement = useSelector((state) => state.agreementReducer);  // число дней проверки
     let myID_Clients = agreement.myID_Clients;
    
@@ -250,7 +250,7 @@ export default function ScreenQueue() {
     };
 
     const renderItemQueue = ({ item, index }) => {
-        return <QueueTaskItem task={item} index={index} />;
+        return <QueueTaskItem task={item} index={index} keyExtractor = {(index)=>index.toString()}/>;
     };
 
     var text1 = onlyMy ? 'Показать все' : 'Показать свои';
@@ -276,7 +276,7 @@ export default function ScreenQueue() {
 
             <FlatList data={queueFilteretdTasks} renderItem={renderItemQueue} ListHeaderComponent={TopQueueTaskItem} />
 
-            <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TaskProfile')}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
 

@@ -21,13 +21,13 @@ if (Platform.OS === 'android') {
   }
 }
 
-export default function ScreenApprove() {
+export default function ScreenApprove({navigation}) {
     
   const myList = useSelector((state) => state.myListReducer);
   const approveTasks = myList?.filter((task) => task?.status.includes('checking')); // отобрали только те что на проверке
   const agreement = useSelector((state) => state.agreementReducer);  // число дней проверки
   const myDaysApprove = agreement.cheking_days;
-  console.log('approveTasks', approveTasks);
+  //console.log('approveTasks', approveTasks);
 
   const approveDispatch = useDispatch();
  //const [approveTasks, approveDispatch] = useReducer(myListReduser, approveTasksInitial);
@@ -74,11 +74,13 @@ export default function ScreenApprove() {
     return (
       <ApproveTaskItem
         task={item}
+        navigation={navigation}
         index={index}
         myDaysApprove={myDaysApprove}
         approve={(task) => approveDispatch(aprTask(task))}
         open={(task) => open(task)}
-        refuse={(task) => approveDispatch(refTask(task))}        
+        refuse={(task) => approveDispatch(refTask(task))} 
+        keyExtractor = {(index)=>index.toString()}       
       />
     );
   };
@@ -90,7 +92,7 @@ export default function ScreenApprove() {
 
       <FlatList data={approveTasks} renderItem={renderItemApprove} ListHeaderComponent={TopApproveTaskItem}/>
 
-      <TouchableOpacity style={styles.button} onPress={() => add()}>
+      <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TaskProfile')}>
         <Text style={styles.buttonText}>Добавить задачу </Text>
       </TouchableOpacity>
     </View>

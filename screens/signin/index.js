@@ -9,29 +9,27 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://api.thecatapi.com/v1/';
-axios.defaults.headers.common['x-api-key'] =
-  'f2899b7f-b575-4378-8ba4-7a4a9b1cabe0';
+// axios.defaults.baseURL = 'https://api.thecatapi.com/v1/';
+// axios.defaults.headers.common['x-api-key'] =
+//   'f2899b7f-b575-4378-8ba4-7a4a9b1cabe0';
 
-export default function App() {
- // const [borderWidth, setBorderWidth] = React.useState();
+export default function App({ navigation }) {
+
 
   const Enter = async () => {
-    const url = '/login';
-    try {
-      const response = await axios.get(url);
-      //     const image = response.data[rNumber(response.data.length)]?.image;
-      //     console.log(image?.id);
-      //     setImage(image);
-    } catch (error) {
-      console.log(error);
-    }
+    // const url = '/login';
+    // try {
+    //   const response = await axios.get(url);
+    //     const image = response.data[rNumber(response.data.length)]?.image;
+    //     console.log(image?.id);
+    //     setImage(image);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    navigation.navigate("MyTabs");
   };
-// useEffect(() => {
-//     setBorderWidth();
-//   }, []);
- 
- 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Servis Desk</Text>
@@ -39,20 +37,20 @@ export default function App() {
 
       <View style={styles.textInputField}>
         <Ionicons style={styles.textInputIcon} name="md-enter-outline" size={20} />
-         <TextInput style={styles.textInp} placeholder="Login" />
+        <TextInput style={styles.textInp} placeholder="Login" />
       </View>
 
       <View style={styles.textInputField}>
         <Ionicons style={styles.textInputIcon} name="md-finger-print" size={20} />
-        <TextInput style={styles.textInp} placeholder="Password"/>
+        <TextInput style={styles.textInp} placeholder="Password" />
       </View>
       <View style={styles.textInputField}>
         <Ionicons style={styles.textInputIcon} name="md-enter-outline" size={20} />
-         <TextInput style={styles.textInp} placeholder="Company" />
+        <TextInput style={styles.textInp} placeholder="Company" />
       </View>
       <View style={styles.textInputField}>
         <Ionicons style={styles.textInputIcon} name="md-enter-outline" size={20} />
-         <TextInput style={styles.textInp} placeholder="Email" />
+        <TextInput style={styles.textInp} placeholder="Email" />
       </View>
 
       <TouchableOpacity style={styles.button} onPress={() => Enter()}>
@@ -105,7 +103,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderColor: '#F7F7F7',
     //backgroundColor: 'yellow',
-    selectionColor: 'red',
+    //selectionColor: 'red',
   },
   textInputField: {
     flexDirection: 'row',

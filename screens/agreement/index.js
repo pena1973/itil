@@ -19,12 +19,19 @@ if (Platform.OS === 'android') {
     }
 }
 
-export default function ScreenAgreement() {
+export default function ScreenAgreement({navigation}) {
     const agreement = useSelector((state) => state.agreementReducer);
     const agreementDiapatch  =  useDispatch();
-    
+
+    const support= ()=>{
+        //console.log(1);
+         agreementDiapatch(resetAgreement());
+         agreementDiapatch(resetMyList());
+         
+     };
+  
      const resetAll= ()=>{
-        console.log(1);
+        //console.log(1);
          agreementDiapatch(resetAgreement());
          agreementDiapatch(resetMyList());
          

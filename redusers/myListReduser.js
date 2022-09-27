@@ -184,16 +184,16 @@ const initialValue = [
           action.payload.status = "completed";
         }
         //action?.payload?.apruved = new Date(curentDay.getTime());
-        console.log('state',state);
-        console.log('payload',action.payload);
+        //console.log('state',state);
+        //console.log('payload',action.payload);
        // let state1 = (state?.filter((n) => n?.id_Tiket !== action.payload.id_Tiket));
         return state;
         // надо задачу добавить в историю
       },
       refTask: (state, action) => {
         // Нужно сменить статус задачи на not_accepted
-        console.log('state',state);
-        console.log('payload',action.payload);
+        //console.log('state',state);
+        //console.log('payload',action.payload);
         return [...state];
       },
       resetMyList: () => {console.log('3',initialValue)

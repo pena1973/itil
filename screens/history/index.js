@@ -21,7 +21,7 @@ if (Platform.OS === 'android') {
     }
 }
 
-export default function ScreenHistory() {
+export default function ScreenHistory({navigation}) {
 
     // читаем лист и фильтруем 
     const myList = useSelector((state) => state.myListReducer);
@@ -29,9 +29,9 @@ export default function ScreenHistory() {
     const myListInitial = myList?.filter((task) => (task?.status.includes('canceled') || task?.status.includes('completed') || task?.status.includes('closed')));
 
     const [historyFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение фильтра к очереди 
-
+    
     const renderItemHistory = ({ item, index }) => {
-        return <HistoryItem task={item} index={index} />;
+        return <HistoryItem task={item} index={index} navigation={navigation} keyExtractor = {(index)=>index.toString()} />;
     };
 
     return (
@@ -42,7 +42,7 @@ export default function ScreenHistory() {
             <Filter showStatus={true} menuStatus = {['canceled','closed','completed']}/>
             <FlatList data={historyFilteretdTasks} renderItem={renderItemHistory} ListHeaderComponent={TopHistoryItem} />
 
-            <TouchableOpacity style={styles.button} onPress={() => AddTask()}>
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TaskProfile')}>
                 <Text style={styles.buttonText}>Добавить задачу </Text>
             </TouchableOpacity>
 

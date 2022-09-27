@@ -2,21 +2,21 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Indicator from './Indicator';
 
-export default function ApproveTaskItem({task, myDaysApprove, approve, refuse, open }) {
+export default function ApproveTaskItem({ task, navigation, myDaysApprove, approve, refuse}) {
   var describtion = task?.content?.slice(0, 115);
   if (describtion?.length < task?.content?.length) {
     describtion = describtion + '...';
   }
- 
+
   return (
     <View style={{ borderColor: 'black', borderWidth: 1 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-        <TouchableOpacity style={{ width: 70, justifyContent: 'center', height: 40 }} 
-        onPress={()=>open(task)}>
+        <TouchableOpacity style={{ width: 70, justifyContent: 'center', height: 40 }}
+          onPress={() => navigation.navigate('TaskProfile', { task })}>
           <Text
             style={
               (styles.textTask,
-              { alignSelf: 'center', justifyContent: 'center' })
+                { alignSelf: 'center', justifyContent: 'center' })
             }
             ellipsizeMode="tail">
             {' '}
@@ -32,67 +32,71 @@ export default function ApproveTaskItem({task, myDaysApprove, approve, refuse, o
             borderLeftWidth: 1,
             height: 100,
           }}
-          onPress={()=>open(task)}>
+          onPress={() => navigation.navigate('TaskProfile', { task })}>
           <Text style={[styles.textTask, { height: 80, alignSelf: 'center' }]}>
             {describtion}
           </Text>
 
           <View
-            style={{ flex: 1, flexDirection: 'row', borderTopWidth: 1, 
-            //backgroundColor: 'red' 
-            }}>
-            < Indicator task={task} myDaysApprove={myDaysApprove}/>        
-            </View>
-        </TouchableOpacity>
-        
-        <View style={{ flexDirection: 'column' }}>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              width: 40,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 0,
-              margin: 2,
-            },
-          ]}
-          onPress={()=>approve(task)}
-          >
-          <Text
             style={{
-              fontSize: 10,
-              lineHeight: 14,
-              color: '#FFDE33',
+              flex: 1, flexDirection: 'row', borderTopWidth: 1,
+              //backgroundColor: 'red' 
             }}>
-            принять
-          </Text>
+            < Indicator task={task} myDaysApprove={myDaysApprove} />
+          </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              width: 40,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 0,
-              margin: 2,
-            },
-          ]}
-          onPress={()=>refuse(task)}
+
+        <View style={{ flexDirection: 'column' }}>        
+          
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                width: 40,
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                margin: 2,
+              },
+            ]}
+            onPress={() => approve(task)}
           >
-          <Text
-            style={{
-              fontSize: 10,
-              lineHeight: 14,
-             // flexDirection: 'row',
-              color: '#FFDE33',
-            }}>
-            Отказ
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 10,
+                lineHeight: 14,
+                color: '#FFDE33',
+              }}>
+              принять
+            </Text>
+          </TouchableOpacity>          
+          
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                width: 40,
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                margin: 2,
+              },
+            ]}
+            onPress={() => refuse(task)}
+          >
+            <Text
+              style={{
+                fontSize: 10,
+                lineHeight: 14,
+                // flexDirection: 'row',
+                color: '#FFDE33',
+              }}>
+              Отказ
+            </Text>
+          </TouchableOpacity>
+          
         </View>
       </View>
     </View>

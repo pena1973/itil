@@ -27,6 +27,9 @@ import History from './screens/history';
 import Agreement from './screens/agreement';
 import MyList from './screens/myList';
 import TaskProfile from './screens/taskProfile';
+import Intro from './screens/intro';
+import Login from './screens/login';
+import Signin from './screens/signin';
 
 // const myID_Clients = 'Apps_000000003';
 // const myDaysApprove = 10;
@@ -44,6 +47,19 @@ function MyStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="MyListN" component={MyList}/>
       <Stack.Screen name="TaskProfile" component={TaskProfile}/> 
+     </Stack.Navigator >
+  )
+};
+
+function MainStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Intro" >
+      <Stack.Screen name="Intro" component={Intro}/> 
+      <Stack.Screen name="Login" component={Login}/> 
+      <Stack.Screen name="Signin" component={Signin}/> 
+      <Stack.Screen name="TaskProfile" component={TaskProfile}/> 
+      <Stack.Screen name="MyTabs" component={MyTabs}/> 
+
      </Stack.Navigator >
   )
 };
@@ -98,7 +114,7 @@ function AppIn() {
   return (
 
     <NavigationContainer>     
-      <MyTabs/>
+      <MainStack/>
     </NavigationContainer>
 
   );
