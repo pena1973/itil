@@ -13,3 +13,4 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
+// нужно еще хранить состояние залогинился или нет

@@ -80,7 +80,7 @@ export default function ScreenApprove({navigation}) {
         approve={(task) => approveDispatch(aprTask(task))}
         open={(task) => open(task)}
         refuse={(task) => approveDispatch(refTask(task))} 
-        keyExtractor = {(index)=>index.toString()}       
+        key = {(index)=>index.toString()}       
       />
     );
   };

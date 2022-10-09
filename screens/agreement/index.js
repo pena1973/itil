@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {useSelector, useDispatch } from 'react-redux';
-import { resetAgreement } from '../../redusers/agreementReduser';
+import { resetAgreement, fetchAgreement, updateAgreement, fetchAgreementError } from '../../redusers/agreementReduser';
 import { resetMyList } from '../../redusers/myListReduser';
 
 if (Platform.OS === 'android') {
@@ -25,8 +25,8 @@ export default function ScreenAgreement({navigation}) {
 
     const support= ()=>{
         //console.log(1);
-         agreementDiapatch(resetAgreement());
-         agreementDiapatch(resetMyList());
+       //  agreementDiapatch(resetAgreement());
+       //  agreementDiapatch(resetMyList());
          
      };
   
@@ -36,6 +36,12 @@ export default function ScreenAgreement({navigation}) {
          agreementDiapatch(resetMyList());
          
      };
+    // сработает один раз  при загрузке страницы, возможно его надо вынести на старт приложения
+     useEffect(() => {
+        console.log("start fetch agreement")
+        // Наверное на вход надо ключ логин пароль
+        agreementDiapatch(fetchAgreement());
+      }, [agreementDiapatch]);
 
     return (
         <View style={styles.container}>

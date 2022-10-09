@@ -1,5 +1,5 @@
 import React from 'react';
-import {
+import {AppRegistry,
   UIManager,
   Platform,
 } from 'react-native';

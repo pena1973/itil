@@ -29,7 +29,7 @@ export default function ScreenMyList({navigation}) {
     const [myListFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение пользовательского фильтра к очереди
 
     const renderItemMyList = ({ item, index }) => {
-        return <MyListItem task={item} index={index} navigation = {navigation} keyExtractor = {(index)=>index.toString()}/>;
+        return <MyListItem task={item} index={index} navigation = {navigation} key = {(index)=>index.toString()}/>;
         
     };
 

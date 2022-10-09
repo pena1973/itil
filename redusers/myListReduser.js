@@ -1,5 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAction } from '@reduxjs/toolkit'
+// saga
+export const fetcMyList = createAction('agreement/FETCH_MYLIST');
 
+// надо будет при старте проверяить соединение и если оно есть сразу получииь через сагу  список задач и диспачить состояние  
 const initialValue = [
   {
     title: 'Задача1',
@@ -180,6 +183,9 @@ const initialValue = [
          return state;
       },
       aprTask: (state, action) => {
+        // Менять надо прямо в стейте!"!!!!"
+        // тоесть в стейте найти клиента и поменять в нем
+        // payload = это входные данные для изменения стейта
         if(action?.payload?.status) {
           action.payload.status = "completed";
         }

@@ -31,7 +31,7 @@ export default function ScreenHistory({navigation}) {
     const [historyFilteretdTasks, setmyListFilteredTasks] = useState(myListInitial); // Применение фильтра к очереди 
     
     const renderItemHistory = ({ item, index }) => {
-        return <HistoryItem task={item} index={index} navigation={navigation} keyExtractor = {(index)=>index.toString()} />;
+        return <HistoryItem task={item} index={index} navigation={navigation} key = {(index)=>index.toString()} />;
     };
 
     return (

@@ -250,7 +250,7 @@ export default function ScreenQueue({navigation}) {
     };
 
     const renderItemQueue = ({ item, index }) => {
-        return <QueueTaskItem task={item} index={index} keyExtractor = {(index)=>index.toString()}/>;
+        return <QueueTaskItem task={item} index={index} key = {(index)=>index.toString()}/>;
     };
 
     var text1 = onlyMy ? 'Показать все' : 'Показать свои';
