@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     UIManager,
     Platform,
+    Linking
 
 } from 'react-native';
 
@@ -18,19 +19,36 @@ if (Platform.OS === 'android') {
         UIManager.setLayoutAnimationEnabledExperimental(true);
     }
 }
+const openwebsite = () => {
+    Linking.openURL(`https://www.mitsol.eu/new/`);
+};
+const openwecontact = () => {
+    Linking.openURL(`https://www.facebook.com/MITSol.eu`);
+};
+
+// const openweinstagram = () => {
+// Linking.openURL(` https://www.instagram.com/p/Ci77LcqMRYw/?igshid=NzNkNDdiOGI=`);
+// };
+const openChat = () => {
+    const text = 'Hello from my app';
+    const phone = '+79163378197';
+    Linking.openURL(`whatsapp://send?text=${text}&phone=${phone}`);
+};
+const openBell = () => {
+    const client = { phone: '+79163378197' };
+    Linking.openURL(`tel:${client.phone}`);
+};
+
+const openMail = () => {
+    const client = { mail: 'info@mitsol.eu' };
+    Linking.openURL('mailto:${client.mail}?');           
+};
 
 export default function ScreenAgreement({navigation}) {
     const agreement = useSelector((state) => state.agreementReducer);
     const agreementDiapatch  =  useDispatch();
 
-    const support= ()=>{
-        //console.log(1);
-       //  agreementDiapatch(resetAgreement());
-       //  agreementDiapatch(resetMyList());
-         
-     };
-  
-     const resetAll= ()=>{
+    const resetAll= ()=>{
         //console.log(1);
          agreementDiapatch(resetAgreement());
          agreementDiapatch(resetMyList());
@@ -46,57 +64,72 @@ export default function ScreenAgreement({navigation}) {
     return (
         <View style={styles.container}>
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, { marginTop: 15 }]}> Договор</Text>
+                <Text style={[styles.textHeader]}> Договор</Text>
 
-                <Text style={[styles.text, { marginTop: 15, fontSize: 16, fontWeight: '500', lineHeight: 16 }]}> Договор подписан {agreement?.signed}</Text>
-                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Абоненская плата {agreement?.regular_fee}</Text>
-                <Text style={[styles.text, { marginTop: 15, marginBottom: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Рабочих дней на проверку задачи {agreement?.cheking_days} </Text>
+                <Text style={[styles.text, { marginTop: 15, fontSize: 16, lineHeight: 16 }]}> Договор подписан {agreement?.signed}</Text>
+                <Text style={[styles.textHeader,{fontSize: 14, lineHeight: 14 }]}> Абоненская плата {agreement?.regular_fee}</Text>
+                <Text style={[styles.textUsual, {marginBottom: 15}]}> Рабочих дней на проверку задачи {agreement?.cheking_days} </Text>
 
                 <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Приоритет </Text>
+                        <Text style={[styles.text]}> Приоритет </Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Стоимость часа </Text>
+                        <Text style={[styles.text]}> Стоимость часа </Text>
                     </View>
                 </View>
 
                 <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Высокий </Text>
+                        <Text style={[styles.text]}> Высокий </Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.high_priority} </Text>
+                        <Text style={[styles.text]}> {agreement?.high_priority} </Text>
                     </View>
                 </View>
 
                 <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, borderBottomWidth: 0, marginLeft: 15, marginRight: 15 }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Средний </Text>
+                        <Text style={[styles.text]}> Средний </Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.midle_priority} </Text>
+                        <Text style={[styles.text]}> {agreement?.midle_priority} </Text>
                     </View>
                 </View>
 
                 <View style={{ flexDirection: 'row', padding: 7, borderWidth: 1, marginLeft: 15, marginRight: 15 }}>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Низкий </Text>
+                        <Text style={[styles.text]}> Низкий </Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={[styles.text, { fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> {agreement?.low_priority} </Text>
+                        <Text style={[styles.text]}> {agreement?.low_priority} </Text>
                     </View>
                 </View>
 
-                <Text style={[styles.text, { marginTop: 15 }]}> Контакты</Text>
-                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Техническая поддержка (телефон, мейл)</Text>
-                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Менеджер {agreement?.manager}</Text>
-                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> Часы работы: </Text>
-                <Text style={[styles.text, { marginTop: 15, fontSize: 14, fontWeight: '500', lineHeight: 14 }]}> рабочие дни с 9-00 до 18-00 </Text>
+                <Text style={[styles.textHeader]}> Контакты</Text>
+                <Text style={[styles.textLink]} onPress={openwebsite}> https://www.mitsol.eu</Text>
+                
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <Text style={styles.textUsual}> Телефон { } </Text>
+                    <Text style={styles.textLink} onPress={openBell}> +79163378197</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <Text style={styles.textUsual}> Чат { } </Text>
+                    <Text style={styles.textLink} onPress={openChat}> +79163378197</Text>
+                </View>
+                
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <Text style={styles.textUsual}> Мейл { } </Text>
+                    <Text style={styles.textLink} onPress={openMail}> info@mitsol.eu</Text>
+                </View>
+                
+                
+                <Text style={[styles.textUsual,{fontSize: 16, lineHeight: 16 }]}> Менеджер {agreement?.manager}</Text>
+                <Text style={[styles.textUsual,{fontSize: 16, lineHeight: 16 }]}> ID клиента {agreement?.myID_Clients}</Text>
+                <Text style={[styles.textHeader]}> Часы работы: </Text>
+                <Text style={[styles.textHeader,{fontSize: 14, lineHeight: 14 }]}> рабочие дни с 9-00 до 18-00 </Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => support()}>
-                <Text style={styles.buttonText}>Сообщение менеджеру </Text>
-            </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => resetAll()}>
                 <Text style={styles.buttonText}>Сбросить </Text>
@@ -114,14 +147,41 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2ECD7',
         padding: 5,
     },
-    text: {
+    textUsual: {
         fontSize: 20,
+        color: '#333333',
+        alignSelf: 'center',
+        marginTop: 15, 
+        fontSize: 14, 
+        fontWeight: '500', 
+        lineHeight: 14 
+    },
+    textLink: {
+        fontSize: 20,
+        color: '#333333',
+        alignSelf: 'center',
+        marginTop: 15, 
+        fontSize: 14, 
+        fontWeight: '500', 
+        lineHeight: 14, 
+        textDecorationLine:'underline',
+        color:'blue'
+    },
+    textHeader: {
+        fontSize: 20,
+        marginTop: 15, 
         fontWeight: '700',
         lineHeight: 20,
         color: '#333333',
         alignSelf: 'center',
     },
-
+    text: {
+        color: '#333333',
+        alignSelf: 'center',
+        fontSize: 14, 
+        fontWeight: '500', 
+        lineHeight: 14 
+    },
     buttonFilter: {
         padding: 3,
         flexDirection: 'row',
